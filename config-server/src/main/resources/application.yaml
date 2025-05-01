@@ -12,7 +12,7 @@ spring:
           clone-on-start: true
           default-label: main
           username: venkatdhruv
-          password: {password_git}
+          password: ${GIT_TOKEN}
 
 eureka:
   client:
