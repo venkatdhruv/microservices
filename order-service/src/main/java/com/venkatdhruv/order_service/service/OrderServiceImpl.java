@@ -3,6 +3,7 @@ package com.venkatdhruv.order_service.service;
 import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -36,6 +37,12 @@ public class OrderServiceImpl implements OrderService {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Value("${microservice.product-service.base-url}")
+    private String productServiceBaseUrl;
+
+    @Value("${microservice.payment-service.base-url}")
+    private String paymentServiceBaseUrl;
 
     @Override
     public Long placeOrder(@NonNull OrderRequest orderRequest) {
@@ -89,7 +96,7 @@ public class OrderServiceImpl implements OrderService {
                 .orElseThrow(() -> new OrderCustomException("Order not found with ID: " + orderId, "ORDER_NOT_FOUND", 404));
 
         log.info("calling product service to get the product dtails for order ID: {}", orderId);
-        ProductDetails productDetails = restTemplate.getForObject("http://product-service/product/"+ order.getProductId(), ProductDetails.class);
+        ProductDetails productDetails = restTemplate.getForObject(productServiceBaseUrl+ order.getProductId(), ProductDetails.class);
         log.info("Order details fetched successfully for order ID: {}", orderId);
 
         PaymentResponse paymentResponse = paymentService.getPaymentDetailsByOrderId(orderId).getBody();

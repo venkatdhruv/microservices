@@ -11,7 +11,7 @@ import com.venkatdhruv.order_service.exception.OrderCustomException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @CircuitBreaker(name = "external", fallbackMethod = "fallback")
-@FeignClient(name = "product-service/product")
+@FeignClient(name = "product-service", url = "${microservice.product-service.base-url}")
 public interface ProductService {
 
     @PutMapping("reduceQuantity/{id}")

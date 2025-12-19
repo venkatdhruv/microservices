@@ -7,16 +7,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.netflix.spectator.impl.PatternExpr.Or;
 import com.venkatdhruv.order_service.decoder.PaymentRequest;
-import com.venkatdhruv.order_service.entity.Order;
 import com.venkatdhruv.order_service.exception.OrderCustomException;
 import com.venkatdhruv.order_service.model.PaymentResponse;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 
 @CircuitBreaker(name = "external", fallbackMethod = "fallback")
-@FeignClient(name = "payment-service/payment")
+@FeignClient(name = "payment-service", url="${microservice.payment-service.base-url}")
 public interface PaymentService {
 
     @PostMapping

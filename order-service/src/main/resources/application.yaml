@@ -18,20 +18,7 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
   config:
     import: configserver:${CONFIG_SERVER_URL:http://localhost:9296}
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          issuer-uri: https://dev-32264917.okta.com/oauth2/default
-      client:
-        registration:
-          internal-client:
-            provider: okta
-            authorization-grant-type: client_credentials
-            scope:
-            - internal
-            client-id: 0oaoj603rsSKZUOjX5d7
-            client-secret: DZY5liFUaumLrEsbQX32MxrI7gn42zV8VWluhKTbM0u3lu3A-w4pwLAcXNYwFnu6
+
           
 
 resilience4j:
@@ -47,3 +34,9 @@ resilience4j:
         sliding-window-type: COUNT_BASED
         event-consumer-buffer-size: 10
 
+
+microservice:
+  product-service:
+    base-url: http://product-service-svc/products
+  payment-service:
+    base-url: http://payment-service-svc/payments

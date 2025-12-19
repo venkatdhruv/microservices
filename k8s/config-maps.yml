@@ -3,8 +3,7 @@ kind: ConfigMap
 metadata:
   name: eureka-cm
 data:
-  eureka_server_address: http://eureka-0.eureka:8761/eureka
-  git_token: {git_token}
+  git_token: ghp_yourgithubtokenhere
 ---
 apiVersion: v1
 kind: ConfigMap
